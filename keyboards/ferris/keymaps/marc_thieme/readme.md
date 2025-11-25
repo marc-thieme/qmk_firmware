@@ -1,3 +1,60 @@
+# My Ferris Variant
+Here is the overview of my layout:
+```
+Mod Keys:
+hold WIN
+hold ALT
+hold MOD4
+hold SHIFT
+hold MOD3
+hold MOD7
+press CTRL
+press MOD5
+press MOD6
+
+Required Combinations:
+MOD4 + WIN
+MOD4 + ALT
+MOD4 + SHIFT
+MOD3 + ALT
+
+Additional Layers
+MOD7: Mouse on the left half
+MOD7: Media keys on the right half
+MOD8: Function Keys
+All other layers taken from the neo2 keyboard layout
+
+Keycode meanings:
+press R1 → Space
+press L1 → Space
+
+R1 → MOD4
+L1 → ALT
+L2 → WIN
+R2 → MOD3
+
+L1 + R2 → SHIFT
+R1 + R2 → MOD7
+L1 + L2 → MOD7
+
+press R2 → oneshot CTRL
+press L2 → oneshot SHIFT
+press L1 + L2 → oneshot MOD8
+press R1 + R2 → oneshot MOD8
+press L1 + R2 → oneshot MOD5
+press L2 + R1 → oneshot MOD6
+
+Encoding:
+R1 = L4
+R2 = L3
+L1 = ALT
+L2 = WIN
+
+L3:
+L1 = SHIFT
+```
+
+
 A usable default keymap for the Ferris keyboard
 ===============================================
 
