@@ -12,7 +12,7 @@
 #define _MOUSE_MEDIA 6
 #define _FUNCTION_KEYS 7
 
-enum my_keycodes { WIN_OS_CTRL = SAFE_RANGE, KC_BNCP, KC_BNM4, KC_EN_UC_WIN };
+enum my_keycodes { WIN_OS_CTRL = SAFE_RANGE };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -143,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ┌────────┬────────┬───────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
         MS_WHLL, MS_WHLD, MS_UP, MS_WHLU, MS_WHLR, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,
         // ├───────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-        MS_BTN1, MS_LEFT, MS_DOWN, MS_RGHT, MS_BTN2, KC_MUTE, KC_VOLD, KC_VOLU, KC_MSTP, KC_MFFD,
+        MS_BTN2, MS_LEFT, MS_DOWN, MS_RGHT, MS_BTN1, KC_MUTE, KC_VOLD, KC_VOLU, KC_MSTP, KC_MFFD,
         // ├───────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
         _______, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU, KC_EJCT, QK_BOOTLOADER,
         // └───────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼────────┴────────┴────────┘
