@@ -14,19 +14,20 @@
 #define _MOUSE_MEDIA 6
 #define _FUNCTION_KEYS 7
 
-enum my_keycodes { WIN_OS_SHIFT = SAFE_RANGE, L3_OS_CTRL };
+enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, L3_OS_CTRL, ALT_OS_SHIFT };
 
 static uint16_t win_os_shift_timer;
 static uint16_t l3_os_ctrl_timer;
+static uint16_t win_os_l3_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case WIN_OS_SHIFT:
+        case ALT_OS_SHIFT:
             if (record->event.pressed) {
                 win_os_shift_timer = timer_read();
-                register_mods(MOD_BIT(KC_LGUI));
+                register_mods(MOD_BIT(KC_LALT));
             } else {
-                unregister_mods(MOD_BIT(KC_LGUI));
+                unregister_mods(MOD_BIT(KC_LALT));
                 if (!record->tap.interrupted && timer_elapsed(win_os_shift_timer) < TAPPING_TERM) {
                     add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
                 }
@@ -40,6 +41,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_off(_NEO_SYM);
                 if (!record->tap.interrupted && timer_elapsed(l3_os_ctrl_timer) < TAPPING_TERM) {
                     add_oneshot_mods(MOD_BIT(KC_LEFT_CTRL));
+                }
+            }
+            return false;
+        case WIN_OS_L3:
+            if (record->event.pressed) {
+                win_os_l3_timer = timer_read();
+                register_mods(MOD_BIT(KC_LGUI));
+            } else {
+                unregister_mods(MOD_BIT(KC_LGUI));
+                if (!record->tap.interrupted && timer_elapsed(win_os_l3_timer) < TAPPING_TERM) {
+                    set_oneshot_layer(_NEO_SYM, ONESHOT_START);
+                    clear_oneshot_layer_state(ONESHOT_PRESSED);
                 }
             }
             return false;
@@ -57,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
             UC(L'ü'),UC(L'ö'),UC(L'ä'), KC_P   , KC_Z           , KC_B   , KC_M   ,KC_COMMA, KC_DOT , KC_J,
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
-                                WIN_OS_SHIFT, ALT_T(KC_SPC), LT(_NEO_NAV, KC_SPC), L3_OS_CTRL
+                                WIN_OS_L3, ALT_OS_SHIFT, LT(_NEO_NAV, KC_SPC), L3_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
         ),
     [_NEO_SYM] = LAYOUT(
