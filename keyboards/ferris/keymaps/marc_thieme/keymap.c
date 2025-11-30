@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
             KC_HOME , KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   , KC_Y   ,
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
-             KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        ,OSL(_NEO_MATH), KC_1   , KC_2   , KC_3   , _______,
+             KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        ,OSL(_NEO_MATH), KC_1   , KC_2   , KC_3   , KC_LSFT,
         // └────────┴────────┴────────┼────────┼─────────┤      ├──────────────┼────────┼────────┴────────┴────────┘
         _______, _______, _______, MO(_MOUSE_MEDIA)
         //                            └────────┴─────────┘      └──────────────┴────────┘
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ),
     [_MOUSE_MEDIA] = LAYOUT(
         // ┌───────┬────────┬────────┬────────┬────────┐       ┌───────┬────────┬────────┬────────┬────────┐
-            MS_WHLL, MS_WHLU, MS_UP  , MS_WHLD, MS_WHLR,        _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,
+            MS_WHLL, MS_WHLU, MS_UP  , MS_WHLD, MS_WHLR,        KC_LSFT, KC_MPRV, KC_MPLY, KC_MNXT, KC_LSFT,
         // ├───────┼────────┼────────┼────────┼────────┤       ├───────┼────────┼────────┼────────┼────────┤
             MS_BTN2, MS_LEFT, MS_DOWN, MS_RGHT, MS_BTN1,        KC_MUTE, KC_VOLD, KC_VOLU, KC_MSTP, KC_MFFD,
         // ├───────┼────────┼────────┼────────┼────────┤       ├───────┼────────┼────────┼────────┼────────┤
