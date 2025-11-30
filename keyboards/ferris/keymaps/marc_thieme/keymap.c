@@ -1,7 +1,9 @@
 #include "action_util.h"
+#include "config.h"
 #include "keycodes.h"
 #include "modifiers.h"
 #include "quantum_keycodes.h"
+#include "timer.h"
 #include QMK_KEYBOARD_H
 
 #define _NEO 0
@@ -14,54 +16,36 @@
 
 enum my_keycodes { WIN_OS_SHIFT = SAFE_RANGE, L3_OS_CTRL };
 
+static uint16_t win_os_shift_timer;
+static uint16_t l3_os_ctrl_timer;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case WIN_OS_SHIFT:
             if (record->event.pressed) {
+                win_os_shift_timer = timer_read();
                 register_mods(MOD_BIT(KC_LGUI));
             } else {
                 unregister_mods(MOD_BIT(KC_LGUI));
-                if (record->tap.count == 1 && !record->tap.interrupted) {
-                    set_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
+                if (!record->tap.interrupted && timer_elapsed(win_os_shift_timer) < TAPPING_TERM) {
+                    add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
                 }
             }
             return false;
         case L3_OS_CTRL:
             if (record->event.pressed) {
+                l3_os_ctrl_timer = timer_read();
                 layer_on(_NEO_SYM);
             } else {
                 layer_off(_NEO_SYM);
-                if (record->tap.count == 1 && !record->tap.interrupted) {
-                    set_oneshot_mods(MOD_BIT(KC_LEFT_CTRL));
+                if (!record->tap.interrupted && timer_elapsed(l3_os_ctrl_timer) < TAPPING_TERM) {
+                    add_oneshot_mods(MOD_BIT(KC_LEFT_CTRL));
                 }
             }
             return false;
     }
     return true;
 }
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//   switch (keycode) {
-//     case KC_RSFT:
-//         layer_invert(_NEO_SHIFT);
-//         update_tri_layer(_NEO_SYM, _NEO_SHIFT, _NEO_GREEK);
-//         return true;
-//     case KC_BNCP:
-//         layer_invert(_NEO_SYM);
-//         update_tri_layer(_NEO_SYM, _NEO_SHIFT, _NEO_GREEK);
-//         update_tri_layer(_NEO_NAV, _NEO_SYM, _NEO_MATH);
-//         return false;
-//     case KC_BNM4:
-//         layer_invert(_NEO_NAV);
-//         update_tri_layer(_NEO_NAV, _NEO_SYM, _NEO_MATH);
-//         return false;
-//     case KC_EN_UC_WIN:
-//         if(record->event.pressed)
-//             SEND_STRING("reg add \"HKCU\\Control Panel\\Input Method\" -v EnableHexNumpad -t REG_SZ -d 1");
-//         return false;
-//     default:
-//          return true;
-//   }
-// }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -89,11 +73,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ),
     [_NEO_NAV] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬─────────┐      ┌──────────────┬────────┬────────┬────────┬────────┐
-            KC_PGUP , KC_BSPC, KC_UP  , KC_DEL , KC_PGDN        ,UC(L'ß')      , KC_7   , KC_8   , KC_9   ,UC(L'ß'),
+            KC_PGUP , KC_BSPC, KC_UP  , KC_DEL , KC_PGDN        ,OSL(_NEO_GREEK), KC_7  , KC_8   , KC_9   ,UC(L'ß'),
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
             KC_HOME , KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   , KC_Y   ,
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
-             KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        , KC_LSFT      , KC_1   , KC_2   , KC_3   , _______,
+             KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        ,OSL(_NEO_MATH), KC_1   , KC_2   , KC_3   , _______,
         // └────────┴────────┴────────┼────────┼─────────┤      ├──────────────┼────────┼────────┴────────┴────────┘
         _______, _______, _______, MO(_MOUSE_MEDIA)
         //                            └────────┴─────────┘      └──────────────┴────────┘
