@@ -14,25 +14,13 @@
 #define _MOUSE_MEDIA 6
 #define _FUNCTION_KEYS 7
 
-enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, L3_OS_CTRL, ALT_OS_SHIFT };
+enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, L3_OS_CTRL };
 
-static uint16_t win_os_shift_timer;
 static uint16_t l3_os_ctrl_timer;
 static uint16_t win_os_l3_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case ALT_OS_SHIFT:
-            if (record->event.pressed) {
-                win_os_shift_timer = timer_read();
-                register_mods(MOD_BIT(KC_LALT));
-            } else {
-                unregister_mods(MOD_BIT(KC_LALT));
-                if (!record->tap.interrupted && timer_elapsed(win_os_shift_timer) < TAPPING_TERM) {
-                    add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
-                }
-            }
-            return false;
         case L3_OS_CTRL:
             if (record->event.pressed) {
                 l3_os_ctrl_timer = timer_read();
@@ -66,11 +54,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
             KC_X    , KC_V   , KC_L   , KC_C   , KC_W           , KC_K   , KC_H   , KC_G   , KC_F   , KC_Q,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-        LT(_NEO_SYM, KC_U), LSFT_T(KC_I),KC_A ,KC_E,KC_O,        KC_S    , KC_N   , KC_R   , LSFT_T(KC_T), LT(_NEO_SYM, KC_D),
+        LSFT_T(KC_U), LT(_NEO_SYM, KC_I),KC_A ,KC_E,KC_O,        KC_S    , KC_N   , KC_R   , LT(_NEO_SYM, KC_T), LSFT_T(KC_D),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            UC(L'ü'),UC(L'ö'),UC(L'ä'), KC_P   , KC_Z           , KC_B   , KC_M   ,KC_COMMA, KC_DOT , KC_J,
+            KC_Y    ,UC(L'ü'),UC(L'ä'), KC_P   , KC_Z           , KC_B   , KC_M   ,KC_COMMA, KC_DOT , KC_J,
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
-                                WIN_OS_L3, ALT_OS_SHIFT, LT(_NEO_NAV, KC_SPC), L3_OS_CTRL
+                                WIN_OS_L3, LALT_T(KC_SPC), LT(_NEO_NAV, KC_SPC), L3_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
         ),
     [_NEO_SYM] = LAYOUT(
@@ -88,11 +76,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ┌────────┬────────┬────────┬────────┬─────────┐      ┌──────────────┬────────┬────────┬────────┬────────┐
             KC_PGUP , KC_BSPC, KC_UP  , KC_DEL , KC_PGDN        ,OSL(_NEO_GREEK), KC_7  , KC_8   , KC_9   ,UC(L'ß'),
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
-            KC_HOME , KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   , KC_Y   ,
+            KC_HOME , KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   , UC(L'ö')   ,
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
              KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        ,OSL(_NEO_MATH), KC_1   , KC_2   , KC_3   , KC_LSFT,
         // └────────┴────────┴────────┼────────┼─────────┤      ├──────────────┼────────┼────────┴────────┴────────┘
-        _______, _______, _______, MO(_MOUSE_MEDIA)
+        _______, LALT_T(KC_0), _______, MO(_MOUSE_MEDIA)
         //                            └────────┴─────────┘      └──────────────┴────────┘
         ),
     [_NEO_GREEK] = LAYOUT(
