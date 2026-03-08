@@ -4,9 +4,10 @@
 #include "modifiers.h"
 #include "quantum_keycodes.h"
 #include "timer.h"
+#include "umlaute.h"
 #include QMK_KEYBOARD_H
 
-#define _NEO 0
+#define _HDP 0
 #define _NEO_SYM 2
 #define _NEO_NAV 3
 #define _NEO_GREEK 4
@@ -17,10 +18,30 @@
 
 enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, MOUSE_OS_CTRL };
 
+const uint16_t PROGMEM combo_uo[] = {KC_DOT, KC_QUOT, COMBO_END};  // U + O
+const uint16_t PROGMEM combo_dl[] = {KC_G, KC_M, COMBO_END};  // D + L
+const uint16_t PROGMEM combo_oe[] = {KC_O, KC_E, COMBO_END};  // O + E
+const uint16_t PROGMEM combo_au[] = {KC_A, KC_U, COMBO_END};  // O + E
+enum { UO, DL, OE, AU };
+combo_t key_combos[] = {
+    [UO] = COMBO(combo_uo, KC_Z),      // U + O => Z
+    [DL] = COMBO(combo_dl, KC_Q),      // D + L => Q
+    [OE] = COMBO_ACTION(combo_oe),     // O + E => custom action: "oe"
+    [AU] = COMBO_ACTION(combo_au),     // O + E => custom action: "oe"
+};
+void process_combo_event(uint16_t idx, bool pressed) {
+    if (!pressed) return;
+    switch (idx) {
+        case OE: tap_code(KC_O); tap_code(KC_E); return;
+        case AU: tap_code(KC_A); tap_code(KC_U); return;
+    }
+}
+
 static uint16_t mouse_os_ctrl_timer;
 static uint16_t win_os_l3_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!umlaut_adaptive_process(keycode, record)) return false;
     switch (keycode) {
         case MOUSE_OS_CTRL:
             if (record->event.pressed) {
@@ -50,18 +71,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-    [_NEO] = LAYOUT(
+    [_HDP] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            KC_X    , KC_V   , KC_L   , KC_C   , KC_W           , KC_K   , KC_H   , KC_G   , KC_F   , KC_Q,
+            KC_F    ,KC_P    ,KC_D    ,KC_L    ,KC_X            ,KC_SCLN ,KC_U    ,KC_O    ,KC_Y    ,KC_B,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-        LSFT_T(KC_U), LT(_NEO_SYM, KC_I),KC_A ,KC_E,KC_O,        KC_S    , KC_N   , KC_R   , LT(_NEO_SYM, KC_T), LSFT_T(KC_D),
+LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,KC_E,LT(_NEO_SYM,KC_I),LSFT_T(KC_C),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            UC(L'ü'),UC(L'ö'), KC_Y   , KC_P   , KC_Z           , KC_B   , KC_M   ,KC_COMMA, KC_DOT , KC_J,
+            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_QUOT,KC_EQL,KC_SLSH,
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
-                                WIN_OS_L3, LALT_T(KC_SPC), LT(_NEO_NAV, KC_SPC), MOUSE_OS_CTRL
+                                        WIN_OS_L3,LALT_T(KC_R),LT(_NEO_NAV,KC_SPC),MOUSE_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
-        ),
+    ),
     [_NEO_SYM] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
             UC(L'…'), KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC        , KC_EXLM, KC_LT  ,   KC_GT,  KC_EQL, KC_AMPR,
@@ -107,11 +127,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //                           └────────┴────────┘       └────────┴────────┘
         ),
     [_MOUSE_FUNCTION] = LAYOUT(
-        // ┌───────┬────────┬────────┬────────┬────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┐
+        // ┌───────┬──────D─┬────────┬────────┬────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┐
             MS_WHLL, MS_WHLU, MS_UP  , MS_WHLD, MS_WHLR,              _______  , KC_F9   , KC_F8   , KC_F7   , _______ ,
         // ├───────┼────────┼────────┼────────┼────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┤
             _______, MS_LEFT, MS_DOWN, MS_RGHT, _______,              KC_F10   , KC_F4   , KC_F5   , KC_F6   , _______ ,
-        // ├───────┼────────┼────────┼────────┼────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┤
+        // ├───────┼──────G─┼────────┼────────┼────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┤
             KC_ESC , _______, _______, _______, _______,              KC_F11   , KC_F1   , KC_F2   , KC_F3   , _______ ,
         // └───────┴────────┴────────┼────────┼────────┤             ├─────────┼─────────┴─────────┴─────────┴─────────┘
         MS_BTN2, MS_BTN1, _______, _______
