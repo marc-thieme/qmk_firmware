@@ -25,6 +25,8 @@ static inline void uml_send_umlaut(uint16_t vowel, bool upper) {
     }
 }
 
+static inline void uml_reset(void) { UML_timer = 0; }
+
 static inline bool umlaut_adaptive_process(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
 
@@ -42,5 +44,7 @@ static inline bool umlaut_adaptive_process(uint16_t keycode, keyrecord_t *record
         uml_send_umlaut(UML_last_vowel, UML_upper); // insert umlaut
         return false; // consume 'e'
     }
-    return true;
+    uml_reset();
+
+   return true;
 }
