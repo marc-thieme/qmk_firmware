@@ -30,7 +30,7 @@ static inline void uml_reset(void) { UML_timer = 0; }
 static inline bool umlaut_adaptive_process(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
 
-    if (keycode == KC_DOT || keycode == KC_A || keycode == KC_U) {
+    if (keycode == KC_A) {
         UML_last_vowel = keycode;
         UML_timer      = timer_read();
 

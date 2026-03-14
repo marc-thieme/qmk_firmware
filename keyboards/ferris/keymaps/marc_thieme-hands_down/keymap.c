@@ -1,6 +1,7 @@
 #include "action_util.h"
 #include "config.h"
 #include "keycodes.h"
+#include "keymap_us.h"
 #include "modifiers.h"
 #include "quantum_keycodes.h"
 #include "timer.h"
@@ -18,14 +19,14 @@
 
 enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, MOUSE_OS_CTRL };
 
-const uint16_t PROGMEM combo_uo[] = {KC_DOT, KC_QUOT, COMBO_END};  // U + O
-const uint16_t PROGMEM combo_dl[] = {KC_G, KC_M, COMBO_END};  // D + L
+const uint16_t PROGMEM combo_wgz[] = {KC_W, KC_G, COMBO_END};  // U + O
+const uint16_t PROGMEM combo_gmq[] = {KC_G, KC_M, COMBO_END};  // D + L
 const uint16_t PROGMEM combo_oe[] = {KC_O, KC_E, COMBO_END};  // O + E
 const uint16_t PROGMEM combo_au[] = {KC_A, KC_U, COMBO_END};  // O + E
 enum { UO, DL, OE, AU };
 combo_t key_combos[] = {
-    [UO] = COMBO(combo_uo, KC_Z),      // U + O => Z
-    [DL] = COMBO(combo_dl, KC_Q),      // D + L => Q
+    [UO] = COMBO(combo_wgz, KC_Z),      // U + O => Z
+    [DL] = COMBO(combo_gmq, KC_Q),      // D + L => Q
     [OE] = COMBO_ACTION(combo_oe),     // O + E => custom action: "oe"
     [AU] = COMBO_ACTION(combo_au),     // O + E => custom action: "oe"
 };
@@ -73,23 +74,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_HDP] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            KC_F    ,KC_P    ,KC_D    ,KC_L    ,KC_X            ,KC_SCLN ,KC_U    ,KC_O    ,KC_Y    ,KC_B,
+            KC_F    ,KC_P    ,KC_D    ,KC_L    ,KC_X            ,KC_UNDS ,KC_U    ,KC_O    ,KC_Y    ,KC_B,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
 LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,KC_E,LT(_NEO_SYM,KC_I),LSFT_T(KC_C),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_QUOT,KC_EQL,KC_SLSH,
+            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_DQUO,KC_COLON,KC_SLSH,
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
                                         WIN_OS_L3,LALT_T(KC_R),LT(_NEO_NAV,KC_SPC),MOUSE_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
     ),
     [_NEO_SYM] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            UC(L'…'), KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC        , KC_EXLM, KC_LT  ,   KC_GT,  KC_EQL, KC_AMPR,
+            UC(L'…'),UC(L'→'), KC_LBRC, KC_RBRC, KC_CIRC        , KC_EXLM, KC_LT  ,   KC_GT, KC_AMPR,UC(L'ß'),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_BSLS , KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR        , KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN,
+            KC_BSLS ,KC_HASH ,KC_LCBR , KC_RCBR, KC_ASTR        , KC_QUES, KC_LPRN, KC_RPRN, KC_EQL , KC_SCLN,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_HASH , KC_DLR , KC_PIPE, KC_TILD, KC_GRV         , KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN,
-        // └────────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼───────┴────────┴────────┘
+            KC_AT   , KC_DLR , KC_PIPE, KC_TILD, KC_GRV         , KC_PLUS, KC_PERC, KC_QUOT,UC(L'ö'),UC(L'ü'),
+        // └────────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼────────┴────────┴────────┘
         _______, _______, _______, MO(_MEDIA_KEYS)
         //                            └────────┴────────┘       └────────┴────────┘
         ),
