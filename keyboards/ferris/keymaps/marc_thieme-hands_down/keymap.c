@@ -21,20 +21,26 @@ enum my_keycodes { WIN_OS_L3 = SAFE_RANGE, MOUSE_OS_CTRL };
 
 const uint16_t PROGMEM combo_wgz[] = {KC_W, KC_G, COMBO_END};  // U + O
 const uint16_t PROGMEM combo_gmq[] = {KC_G, KC_M, COMBO_END};  // D + L
+const uint16_t PROGMEM combo_wmqu[] = {KC_W, KC_M, COMBO_END};  // D + L
 const uint16_t PROGMEM combo_oe[] = {KC_O, KC_E, COMBO_END};  // O + E
 const uint16_t PROGMEM combo_au[] = {KC_A, KC_U, COMBO_END};  // O + E
-enum { UO, DL, OE, AU };
+const uint16_t PROGMEM combo_nw[] = {KC_W, KC_N, COMBO_END};  // O + E
+enum { WM, UO, DL, OE, AU, WN };
 combo_t key_combos[] = {
     [UO] = COMBO(combo_wgz, KC_Z),      // U + O => Z
     [DL] = COMBO(combo_gmq, KC_Q),      // D + L => Q
+    [WM] = COMBO_ACTION(combo_wmqu),
     [OE] = COMBO_ACTION(combo_oe),     // O + E => custom action: "oe"
     [AU] = COMBO_ACTION(combo_au),     // O + E => custom action: "oe"
+    [WN] = COMBO_ACTION(combo_nw)
 };
 void process_combo_event(uint16_t idx, bool pressed) {
     if (!pressed) return;
     switch (idx) {
+        case WM: tap_code(KC_Q); tap_code(KC_U); return;
         case OE: tap_code(KC_O); tap_code(KC_E); return;
         case AU: tap_code(KC_A); tap_code(KC_U); return;
+        case WN: tap_code(KC_W); tap_code(KC_N); return;
     }
 }
 
@@ -78,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
 LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,KC_E,LT(_NEO_SYM,KC_I),LSFT_T(KC_C),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_DQUO,KC_COLON,KC_SLSH,
+            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_QUOT, KC_QUES,KC_SLSH,
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
                                         WIN_OS_L3,LALT_T(KC_R),LT(_NEO_NAV,KC_SPC),MOUSE_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
@@ -87,18 +93,18 @@ LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,K
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
             UC(L'…'),UC(L'→'), KC_LBRC, KC_RBRC, KC_CIRC        , KC_EXLM, KC_LT  ,   KC_GT, KC_AMPR,UC(L'ß'),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_BSLS ,KC_HASH ,KC_LCBR , KC_RCBR, KC_ASTR        , KC_QUES, KC_LPRN, KC_RPRN, KC_EQL , KC_SCLN,
+            KC_BSLS , KC_DLR ,KC_LCBR , KC_RCBR, KC_ASTR        , KC_EQL , KC_LPRN, KC_RPRN, KC_COLN, KC_SCLN,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_AT   , KC_DLR , KC_PIPE, KC_TILD, KC_GRV         , KC_PLUS, KC_PERC, KC_QUOT,UC(L'ö'),UC(L'ü'),
+            KC_AT   , KC_HASH, KC_PIPE, KC_TILD, KC_GRV         , KC_PLUS, KC_PERC, KC_DQUO,UC(L'ö'),UC(L'ü'),
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼────────┴────────┴────────┘
         _______, _______, _______, MO(_MEDIA_KEYS)
         //                            └────────┴────────┘       └────────┴────────┘
         ),
     [_NEO_NAV] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬─────────┐      ┌──────────────┬────────┬────────┬────────┬────────┐
-            KC_PGUP , KC_BSPC, KC_UP  , KC_DEL , KC_PGDN        ,OSL(_NEO_GREEK), KC_7  , KC_8   , KC_9   ,UC(L'ß'),
+            KC_PGUP , KC_BSPC, KC_UP  , KC_DEL , KC_PGDN        ,OSL(_NEO_GREEK), KC_7  , KC_8   , KC_9   , _______,
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
-     LSFT_T(KC_HOME), KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   ,UC(L'ä'),
+     LSFT_T(KC_HOME), KC_LEFT, KC_DOWN, KC_RGHT, KC_END         , KC_0         , KC_4   , KC_5   , KC_6   , _______,
         // ├────────┼────────┼────────┼────────┼─────────┤      ├──────────────┼────────┼────────┼────────┼────────┤
              KC_ESC , KC_TAB , KC_INS , KC_ENT , KC_UNDO        ,OSL(_NEO_MATH), KC_1   , KC_2   , KC_3   , KC_LSFT,
         // └────────┴────────┴────────┼────────┼─────────┤      ├──────────────┼────────┼────────┴────────┴────────┘
@@ -111,14 +117,14 @@ LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,K
         // ├────────┼────────┼────────┼────────┼─────────┤       ├────────┼────────┼────────┼────────┼────────┤
             UC(L'υ'),UC(L'ι'),UC(L'α'),UC(L'ε'),UC(L'ο')         ,UC(L'σ'),UC(L'ν'),UC(L'ρ'),UC(L'τ'),UC(L'δ'),
         // ├────────┼────────┼────────┼────────┼─────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            XXXXXXX ,UC(L'ϵ'),UC(L'η'),UC(L'π'),UC(L'ζ')         ,UC(L'β'),UC(L'μ'),UC(L'ϱ'),UC(L'ϑ'),UC(L'θ'),
+            _______ ,UC(L'ϵ'),UC(L'η'),UC(L'π'),UC(L'ζ')         ,UC(L'β'),UC(L'μ'),UC(L'ϱ'),UC(L'ϑ'),UC(L'θ'),
         // └────────┴────────┴────────┼────────┼─────────┤       ├────────┼────────┼────────┴────────┴────────┘
         _______, _______, _______, _______
         //                          └────────┴─────────┘       └────────┴────────┘
         ),
     [_NEO_MATH] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            UC(L'∘'),UC(L'∨'),UC(L'∧'),UC(L'ℂ'),UC(L'⊕')        ,UC(L'×'),UC(L'Ψ'),UC(L'Θ'),UC(L'Φ'),UC(L'ℚ'),
+            UC(L'∘'),UC(L'∨'),UC(L'∧'),UC(L'ℂ'), UC(L'×')       ,UC(L'⊕'),UC(L'Ψ'),UC(L'Θ'),UC(L'Φ'),UC(L'ℚ'),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
             UC(L'⊂'),UC(L'∫'),UC(L'∀'),UC(L'∃'),UC(L'∈')        ,UC(L'Σ'),UC(L'ℕ'),UC(L'ℝ'),UC(L'∂'),UC(L'Δ'),
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼────────┴────────┴────────┘
@@ -129,11 +135,11 @@ LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,K
         ),
     [_MOUSE_FUNCTION] = LAYOUT(
         // ┌───────┬────────┬────────┬────────┬────────┐             ┌─────────┬─────────┬─────────┬─────────┬─────────┐
-            MS_WHLL, MS_WHLU, MS_UP  , MS_WHLD, MS_WHLR,              _______  , KC_F9   , KC_F8   , KC_F7   , _______ ,
+            MS_WHLL, MS_WHLU, MS_UP  , MS_WHLD, MS_WHLR,              KC_F12   , KC_F9   , KC_F8   , KC_F7   ,  KC_LEFT_ALT,
         // ├───────┼────────┼────────┼────────┼────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┤
-            _______, MS_LEFT, MS_DOWN, MS_RGHT, _______,              KC_F10   , KC_F4   , KC_F5   , KC_F6   , _______ ,
+            KC_LEFT_SHIFT, MS_LEFT, MS_DOWN, MS_RGHT, KC_LEFT_CTRL,   KC_F11   , KC_F4   , KC_F5   , KC_F6   , KC_LEFT_CTRL,
         // ├───────┼────────┼────────┼────────┼────────┤             ├─────────┼─────────┼─────────┼─────────┼─────────┤
-            KC_ESC , _______, _______, _______, _______,              KC_F11   , KC_F1   , KC_F2   , KC_F3   , _______ ,
+            KC_ESC , _______, _______, _______, _______,              KC_F10   , KC_F1   , KC_F2   , KC_F3   , _______ ,
         // └───────┴────────┴────────┼────────┼────────┤             ├─────────┼─────────┴─────────┴─────────┴─────────┘
         MS_BTN2, MS_BTN1, _______, _______
         //                           └────────┴────────┘             └─────────┴─────────┘
