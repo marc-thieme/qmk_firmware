@@ -1,5 +1,6 @@
 #pragma once
 
+#define EE_HANDS
 #define TAPPING_TERM 150
 #define MOUSEKEY_MOVE_DELTA 4
 #define MOUSEKEY_INTERVAL 12
