@@ -80,11 +80,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_HDP] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            KC_F    ,KC_P    ,KC_D    ,KC_L    ,KC_X            ,KC_UNDS ,KC_U    ,KC_O    ,KC_Y    ,KC_B,
+            LCTL_T(KC_F)    ,KC_P    ,LCTL_T(KC_D)    ,KC_L    ,KC_X            ,KC_UNDS ,KC_U    ,LCTL_T(KC_O)    ,KC_Y    ,LCTL_T(KC_B),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
 LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,KC_E,LT(_NEO_SYM,KC_I),LSFT_T(KC_C),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_V    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_QUOT, KC_QUES,KC_SLSH,
+            LCTL_T(KC_V)    ,KC_W    ,KC_G    ,KC_M    ,KC_J            ,KC_MINS ,KC_DOT  ,KC_QUOT, KC_QUES,LCTL_T(KC_SLSH),
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┴────────┴────┬───┴────────┴┬───────┘
                                         WIN_OS_L3,LALT_T(KC_R),LT(_NEO_NAV,KC_SPC),MOUSE_OS_CTRL
         //                            └────────┴────────┘       └──────────────────────┴─────────────┘
