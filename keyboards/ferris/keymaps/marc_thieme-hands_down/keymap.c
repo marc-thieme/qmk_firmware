@@ -80,7 +80,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_HDP] = LAYOUT(
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
-            LCTL_T(KC_F)    ,KC_P    ,LCTL_T(KC_D)    ,KC_L    ,KC_X            ,KC_UNDS ,KC_U    ,LCTL_T(KC_O)    ,KC_Y    ,LCTL_T(KC_B),
+            LCTL_T(KC_F)    ,KC_P    ,LCTL_T(KC_D)    ,KC_L    ,KC_X            ,KC_EQL ,KC_U    ,LCTL_T(KC_O)    ,KC_Y    ,LCTL_T(KC_B),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
 LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,KC_E,LT(_NEO_SYM,KC_I),LSFT_T(KC_C),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
@@ -93,7 +93,7 @@ LSFT_T(KC_S),LT(_NEO_SYM,KC_N),KC_T   ,KC_H    ,KC_K            ,KC_COMM ,KC_A,K
         // ┌────────┬────────┬────────┬────────┬────────┐       ┌────────┬────────┬────────┬────────┬────────┐
             UC(L'…'),UC(L'→'), KC_LBRC, KC_RBRC, KC_CIRC        , KC_EXLM, KC_LT  ,   KC_GT, KC_AMPR,UC(L'ß'),
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
-            KC_BSLS , KC_DLR ,KC_LCBR , KC_RCBR, KC_ASTR        , KC_EQL , KC_LPRN, KC_RPRN, KC_COLN, KC_SCLN,
+            KC_BSLS , KC_DLR ,KC_LCBR , KC_RCBR, KC_ASTR        , KC_UNDS , KC_LPRN, KC_RPRN, KC_COLN, KC_SCLN,
         // ├────────┼────────┼────────┼────────┼────────┤       ├────────┼────────┼────────┼────────┼────────┤
             KC_AT   , KC_HASH, KC_PIPE, KC_TILD, KC_GRV         , KC_PLUS, KC_PERC, KC_DQUO,UC(L'ö'),UC(L'ü'),
         // └────────┴────────┴────────┼────────┼────────┤       ├────────┼────────┼────────┴────────┴────────┘
