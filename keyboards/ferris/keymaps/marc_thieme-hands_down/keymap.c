@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F, KC_P, LCTL_T(KC_D), KC_L, KC_X,       /**/ KC_EQL, KC_U, LCTL_T(KC_O), KC_Y, KC_B,
         LSFT_T(KC_S), LT(_NEO_SYM,KC_N), LT(_MOUSE_FUNCTION,KC_T), LT(_NEO_NAV,KC_H), KC_K,  /**/ KC_COMM, LT(_NEO_NAV,KC_A), LT(_MOUSE_FUNCTION,KC_E), LT(_NEO_SYM,KC_I), LSFT_T(KC_C),
         KC_V, KC_W, KC_G, KC_M, KC_J,               /**/ KC_MINS, KC_DOT, KC_QUOT, KC_QUES, KC_SLSH,
-        WIN_T(KC_R), LALT_T(KC_SPC), MOUSE_OS_CTRL, KC_SPC
+        WIN_T(KC_SPC), LALT_T(KC_SPC), KC_R, KC_R
         ),
     [_NEO_SYM] = LAYOUT(
         UC(L'…'), UC(L'→'), KC_LBRC, KC_RBRC, KC_CIRC,      /**/ KC_EXLM, KC_LT, KC_GT, KC_AMPR, UC(L'ß'),
