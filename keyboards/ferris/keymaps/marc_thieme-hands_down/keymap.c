@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE_FUNCTION] = LAYOUT(
         _______, MS_WHLU, MS_UP, MS_WHLD, KC_LSFT,          /**/ KC_F12, KC_F7, KC_F8, KC_F9, KC_LEFT_ALT,
         MS_WHLL, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLR,        /**/ KC_F11, KC_F4, KC_F5, KC_F6, KC_LEFT_CTRL,
-        KC_ESC, _______, _______, LT(_MEDIA_KEYS), _______,         /**/ KC_F10, KC_F1, KC_F2, KC_F3, KC_LSFT,
+        KC_ESC, _______, _______, MO(_MEDIA_KEYS), _______,         /**/ KC_F10, KC_F1, KC_F2, KC_F3, KC_LSFT,
         MS_BTN2, MS_BTN1, _______, _______
         ),
     [_MEDIA_KEYS] = LAYOUT(
