@@ -54,26 +54,6 @@ void    process_combo_event(uint16_t idx, bool pressed) {
     }
 }
 
-static uint16_t mouse_os_ctrl_timer;
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!umlaut_adaptive_process(keycode, record)) return false;
-    switch (keycode) {
-        case MOUSE_OS_CTRL:
-            if (record->event.pressed) {
-                mouse_os_ctrl_timer = timer_read();
-                layer_on(_MOUSE_FUNCTION);
-            } else {
-                layer_off(_MOUSE_FUNCTION);
-                if (!record->tap.interrupted && timer_elapsed(mouse_os_ctrl_timer) < TAPPING_TERM) {
-                    add_oneshot_mods(MOD_BIT(KC_LEFT_CTRL));
-                }
-            }
-            return false;
-    }
-    return true;
-}
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_HDP] = LAYOUT(
         KC_F, KC_P, LCTL_T(KC_D), KC_L, KC_X,       /**/ KC_EQL, KC_U, LCTL_T(KC_O), KC_Y, KC_B,
@@ -85,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         UC(L'…'), UC(L'→'), KC_LBRC, KC_RBRC, KC_CIRC,      /**/ KC_EXLM, KC_LT, KC_GT, KC_AMPR, UC(L'ß'),
         KC_BSLS, KC_DLR, KC_LCBR, KC_RCBR, KC_ASTR,         /**/ KC_UNDS, KC_LPRN, KC_RPRN, KC_COLN, KC_SCLN,
         KC_AT, KC_HASH, KC_PIPE, KC_TILD, KC_GRV,           /**/ KC_PLUS, KC_PERC, KC_DQUO, UC(L'ö'), UC(L'ü'),
-        _______, _______, _______, MO(_MEDIA_KEYS)
+        _______, _______, _______, _______
         ),
     [_NEO_NAV] = LAYOUT(
         KC_PGUP, KC_BSPC, KC_UP, KC_DEL, KC_PGDN,           /**/ OSL(_NEO_GREEK), KC_7, KC_8, KC_9, _______,
@@ -108,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE_FUNCTION] = LAYOUT(
         _______, MS_WHLU, MS_UP, MS_WHLD, KC_LSFT,          /**/ KC_F12, KC_F7, KC_F8, KC_F9, KC_LEFT_ALT,
         MS_WHLL, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLR,        /**/ KC_F11, KC_F4, KC_F5, KC_F6, KC_LEFT_CTRL,
-        KC_ESC, _______, _______, _______, _______,         /**/ KC_F10, KC_F1, KC_F2, KC_F3, KC_LSFT,
+        KC_ESC, _______, _______, LT(_MEDIA_KEYS), _______,         /**/ KC_F10, KC_F1, KC_F2, KC_F3, KC_LSFT,
         MS_BTN2, MS_BTN1, _______, _______
         ),
     [_MEDIA_KEYS] = LAYOUT(
