@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_PGUP, KC_BSPC, KC_UP, KC_DEL, KC_PGDN,           /**/ OSL(_NEO_GREEK), KC_7, KC_8, KC_9, _______,
         LSFT_T(KC_HOME), KC_LEFT, KC_DOWN, KC_RGHT, KC_END, /**/ KC_0, KC_4, KC_5, KC_6, _______,
         KC_ESC, KC_TAB, KC_INS, KC_ENT, KC_UNDO,            /**/ OSL(_NEO_MATH), KC_1, KC_2, KC_3, KC_LSFT,
-        _______, LALT_T(KC_0), _______, OSL(_MY_MATH)
+        WIN_T(KC_0), LALT_T(KC_0), _______, OSL(_MY_MATH)
         ),
     [_NEO_GREEK] = LAYOUT(
         UC(L'ξ'), UC(L'ς'), UC(L'λ'), UC(L'χ'), UC(L'ω'),   /**/ UC(L'κ'), UC(L'ψ'), UC(L'γ'), UC(L'φ'), UC(L'ϕ'),
